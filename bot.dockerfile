@@ -10,4 +10,4 @@ COPY src/ .
 
 EXPOSE 80
 
-CMD python main.py
+CMD ["python", "-u", "main.py"]

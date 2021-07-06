@@ -1,5 +1,4 @@
 import random
-import threading
 import time
 
 from ogame import OGame
@@ -13,12 +12,11 @@ class Credentials:
         self.password = password
 
 
-running = True
 bot_queue: list[Credentials] = []
 
 
 def bot(creds: Credentials):
-    empire = OGame(creds.universe, creds.username, creds.password)
+    empire = OGame(creds.universe, creds.username, creds.password, proxy='')
     ids = empire.planet_ids()
     for ID in ids:
         for order in buildings.queue(ID, empire):
@@ -34,16 +32,15 @@ def bot(creds: Credentials):
 
 def scheduler():
     print('Starting up Barakis Scheduler')
-    while running:
+    while True:
+        print(bot_queue)
         for creds in bot_queue:
             try:
                 bot(creds)
             except Exception as e:
                 print(e)
             time.sleep(random.randint(20, 120))
-
-
-thread = threading.Thread(target=scheduler)
+        time.sleep(5)
 
 
 def add(uni, username, password) -> bool:
