@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+
+  bot:
+    build:
+      context: .
+      dockerfile: bot.dockerfile
+    image: 127.0.0.1:5000/barakis
+    deploy:
+      mode: replicated
+      replicas: 1
+    networks:
+      - api
+
+networks:
+  api:
+    driver: overlay

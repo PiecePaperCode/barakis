@@ -1,0 +1,5 @@
+Flask~=2.0.1
+requests~=2.25.1
+ogame~=7.6.6.20
+waitress~=2.0.0
+pysocks
