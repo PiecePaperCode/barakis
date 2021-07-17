@@ -4,12 +4,16 @@ Advanced free to use Ogame Bot using the pyogame lib
 This Bot is used in pyogame.net
 
 ## Install
+virt env
 ```shell
 git clone clone https://github.com/PiecePaperCode/barakis.git
 cd barakis
 pip install -r requirements.txt
 ```
-
+docker-compose
+```shell
+docker-compose up
+```
 ## Start
 ```shell
 cd src

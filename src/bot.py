@@ -1,6 +1,6 @@
 import random
 import time
-
+import traceback
 from ogame import OGame
 import buildings
 
@@ -16,7 +16,9 @@ bot_queue: list[Credentials] = []
 
 
 def bot(creds: Credentials):
-    empire = OGame(creds.universe, creds.username, creds.password, proxy='')
+    empire = OGame(
+        creds.universe, creds.username, creds.password
+    )
     ids = empire.planet_ids()
     for ID in ids:
         for order in buildings.queue(ID, empire):
@@ -38,8 +40,8 @@ def scheduler():
             try:
                 bot(creds)
             except Exception as e:
-                print(e)
-            time.sleep(random.randint(20, 120))
+                print(e, traceback.print_tb(e.__traceback__))
+            time.sleep(random.randint(5, 60))
         time.sleep(5)
 
 
@@ -71,7 +73,7 @@ def stop() -> bool:
 
 
 def active(universe, username) -> bool:
-    for i, creds in enumerate(bot_queue):
+    for creds in bot_queue:
         if creds.universe == universe and creds.username == username:
             return True
     return False

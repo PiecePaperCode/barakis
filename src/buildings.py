@@ -17,6 +17,14 @@ def queue(ID: int, empire: OGame):
     return [
         # Supply
         Order(
+            build=constants.buildings.solar_plant,
+            condition=(
+                    resources.energy < 0
+                    and mines.solar_plant.level < 30
+                    and mines.solar_plant.is_possible
+            )
+        ),
+        Order(
             build=constants.buildings.crystal_mine,
             condition=(
                     mines.crystal_mine.level < 25
@@ -35,14 +43,6 @@ def queue(ID: int, empire: OGame):
             condition=(
                     mines.deuterium_mine.level < 15
                     and mines.deuterium_mine.is_possible
-            )
-        ),
-        Order(
-            build=constants.buildings.solar_plant,
-            condition=(
-                resources.energy < 0
-                and mines.solar_plant.level < 30
-                and mines.solar_plant.is_possible
             )
         ),
         Order(
@@ -195,7 +195,7 @@ def queue(ID: int, empire: OGame):
             build=constants.research.research_network,
             condition=(
                     research.research_network.is_possible
-                    and research.research_network.level < empire.numbers_planets().total
+                    and research.research_network.level < empire.slot_celestial().total
             )
         ),
         Order(
@@ -214,9 +214,9 @@ def queue(ID: int, empire: OGame):
         Order(
             build=constants.ships.colonyShip(),
             condition=(
-                ships.colonyShip.amount < 1
+                ships.colonyShip.amount == 0
                 and ships.colonyShip.is_possible
-                and 0 < empire.numbers_planets().free
+                and 0 < empire.slot_celestial().free
             )
         ),
 

@@ -1,10 +1,7 @@
 import json
-from multiprocessing import Process
-
 from flask import Flask, jsonify, request
-from waitress import serve
+from bot import add, remove, active
 
-from bot import add, remove, active, bot
 
 app = Flask(__name__)
 
