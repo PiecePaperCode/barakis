@@ -1,6 +1,6 @@
 Flask~=2.0.1
 requests~=2.25.1
 waitress~=2.0.0
-ogame
+ogame~=8.4.0.22
 pysocks
 redis

@@ -10,18 +10,34 @@ git clone clone https://github.com/PiecePaperCode/barakis.git
 cd barakis
 pip install -r requirements.txt
 ```
-docker-compose
-```shell
-docker-compose up
-```
+
 ## Start
+### Shell
 ```shell
 cd src
 python main.py
 ```
+### Docker
+docker-compose
+```shell
+docker-compose up
+```
 it starts the Rest API and the Scheduler and awaits bots
 
 ## How to Use
+Its REST Service starts and waits for credentials on which it will act.
+You can send it multiple bot credentials, and it will schedule them and perform 
+actions defined in buildings.py
+### Curl
+add bot
+``` shell
+curl -XPOST -H "Content-type: application/json" -d '{'universe': UNI,'username': EMAIL,'password': PASSWORD}' 'http://127.0.0.1:80/start'
+```
+check its status
+``` shell
+curl -XPOST -H "Content-type: application/json" -d '{'universe': UNI,'username': EMAIL}' 'http://127.0.0.1:80/active'
+```
+### Example in Python
 ``` python
 import requests
 

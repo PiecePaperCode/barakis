@@ -4,8 +4,7 @@ WORKDIR app
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY ogame-8.1.0.21.tar.gz .
-RUN pip install ogame-8.1.0.21.tar.gz
+RUN pip install git+https://github.com/alaingilbert/pyogame.git@develop
 
 COPY src/ .
 

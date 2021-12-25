@@ -12,14 +12,6 @@ services:
     networks:
       - api
 
-  redis:
-    image: redis:6.2.4
-    deploy:
-      mode: replicated
-      replicas: 1
-    networks:
-      - api
-
 networks:
   api:
     driver: overlay

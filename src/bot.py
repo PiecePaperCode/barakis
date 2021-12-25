@@ -3,6 +3,7 @@ import time
 import traceback
 from ogame import OGame
 import buildings
+import proxys
 
 
 class Credentials:
@@ -17,7 +18,8 @@ bot_queue: list[Credentials] = []
 
 def bot(creds: Credentials):
     empire = OGame(
-        creds.universe, creds.username, creds.password
+        creds.universe, creds.username, creds.password,
+        # proxy=proxys.random_proxy()
     )
     ids = empire.planet_ids()
     for ID in ids:

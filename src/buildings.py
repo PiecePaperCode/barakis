@@ -1,3 +1,5 @@
+import datetime
+
 from ogame import constants
 from ogame import OGame
 
@@ -8,6 +10,8 @@ def queue(ID: int, empire: OGame):
     research = empire.research(ID)
     ships = empire.ships(ID)
     resources = empire.resources(ID)
+    defences = empire.defences(ID)
+    celestial_queue = empire.celestial_queue(ID)
 
     class Order:
         def __init__(self, build, condition):
@@ -240,6 +244,80 @@ def queue(ID: int, empire: OGame):
             condition=(
                     mines.deuterium_storage.level < 11
                     and mines.deuterium_storage.is_possible
+            )
+        ),
+
+        # Defences
+        Order(
+            build=constants.buildings.shield_dome_small(),
+            condition=defences.shield_dome_small.is_possible
+        ),
+        Order(
+            build=constants.buildings.shield_dome_large(),
+            condition=defences.shield_dome_large.is_possible
+        ),
+        Order(
+            build=constants.buildings.rocket_launcher(100),
+            condition=(
+                defences.rocket_launcher.is_possible
+                and 4 < factory.shipyard.level
+                and celestial_queue.shipyard < datetime.datetime.now()
+                and defences.rocket_launcher.amount < 1000
+            )
+        ),
+        Order(
+            build=constants.buildings.laser_cannon_light(100),
+            condition=(
+                    defences.laser_cannon_light.is_possible
+                    and celestial_queue.shipyard < datetime.datetime.now()
+                    and 4 < factory.shipyard.level
+                    and defences.laser_cannon_light.amount < 1000
+            )
+        ),
+        Order(
+            build=constants.buildings.laser_cannon_heavy(100),
+            condition=(
+                    defences.laser_cannon_heavy.is_possible
+                    and celestial_queue.shipyard < datetime.datetime.now()
+                    and 4 < factory.shipyard.level
+                    and defences.laser_cannon_heavy.amount < 400
+            )
+        ),
+        Order(
+            build=constants.buildings.gauss_cannon(10),
+            condition=(
+                    defences.gauss_cannon.is_possible
+                    and celestial_queue.shipyard < datetime.datetime.now()
+                    and 8 < factory.shipyard.level
+                    and defences.gauss_cannon.amount < 100
+            )
+        ),
+        Order(
+            build=constants.buildings.ion_cannon(10),
+            condition=(
+                    defences.ion_cannon.is_possible
+                    and celestial_queue.shipyard < datetime.datetime.now()
+                    and 8 < factory.shipyard.level
+                    and defences.ion_cannon.amount < 100
+            )
+        ),
+        Order(
+            build=constants.buildings.plasma_cannon(5),
+            condition=(
+                    defences.plasma_cannon.is_possible
+                    and celestial_queue.shipyard < datetime.datetime.now()
+                    and 10 < factory.shipyard.level
+                    and defences.laser_cannon_heavy.amount < 40
+            )
+        ),
+        Order(
+            build=constants.buildings.missile_interceptor(5),
+            condition=(
+                    defences.missile_interceptor.is_possible
+                    and celestial_queue.shipyard < datetime.datetime.now()
+                    and 1 < factory.shipyard.level
+                    and 0 < factory.missile_silo.level
+                    and defences.missile_interceptor.amount < 60
             )
         ),
     ]
